@@ -25,7 +25,9 @@ show collections
 output:
 
 ```
-
+departments
+students
+system.indexes
 ```
 
 ## 3 . Membuat atau mengaktifkan database.
@@ -75,13 +77,18 @@ output:
 input:
 
 ```
-db.student.find()
+var student = db.students.findOne();
+for (var key in student) { print (key) ; }
 ```
 
 output:
 
 ```
-
+_id
+NIM
+name
+address
+department
 ```
 
 ## 7 . Menginputkan 5 data ke dalam collection department.
@@ -130,62 +137,137 @@ BulkWriteResult({
 })
 ```
 
-## 1 . Membuat database academic.
+## 9 . Melihat isi collection student.
+
 input:
+
 ```
-use academic
-```
-output:
-```
-switched to db academic
+db.students.find()
 ```
 
-## 1 . Membuat database academic.
-input:
-```
-use academic
-```
 output:
+
 ```
-switched to db academic
+{ "_id" : ObjectId("58901e6769a01ac6a294a3ad"), "NIM" : "15109063", "name" : "Muhammad Iqbal", "address" : "Margahayu Raya Bandung", "department" : DBRef("departments",
+ ObjectId("58901b4e69a01ac6a294a3aa")) }
+{ "_id" : ObjectId("58901e6769a01ac6a294a3ae"), "NIM" : "16109063", "name" : "Raditya Arya", "address" : "Gatsu Surabaya", "department" : DBRef("departments", ObjectId(
+"58901b4e69a01ac6a294a3a8")) }
+{ "_id" : ObjectId("58901e6769a01ac6a294a3af"), "NIM" : "17109021", "name" : "Timothy Ombun", "address" : "Soekarno Hatta Batam", "department" : DBRef("departments", Ob
+jectId("58901b4e69a01ac6a294a3ab")) }
 ```
 
-## 1 . Membuat database academic.
+## 10 . Menampilkan key name dan address dalam collection student.
+
 input:
+
 ```
-use academic
-```
-output:
-```
-switched to db academic
+db.students.find({},{name:1, address:1})
 ```
 
-## 1 . Membuat database academic.
-input:
-```
-use academic
-```
 output:
+
 ```
-switched to db academic
+{ "_id" : ObjectId("58901e6769a01ac6a294a3ad"), "name" : "Muhammad Iqbal", "address" : "Margahayu Raya Bandung" }
+{ "_id" : ObjectId("58901e6769a01ac6a294a3ae"), "name" : "Raditya Arya", "address" : "Gatsu Surabaya" }
+{ "_id" : ObjectId("58901e6769a01ac6a294a3af"), "name" : "Timothy Ombun", "address" : "Soekarno Hatta Batam" }
 ```
 
-## 1 . Membuat database academic.
+## 11 . Menampilkan key NIM, name, dan address dari data student yang memunyai NIM tertentu.
+
 input:
+
 ```
-use academic
-```
-output:
-```
-switched to db academic
+db.students.find({NIM:"15109063"},{NIM:1, name:1, address:1})
 ```
 
-## 1 . Membuat database academic.
-input:
-```
-use academic
-```
 output:
+
 ```
-switched to db academic
+{ "_id" : ObjectId("58901e6769a01ac6a294a3ad"), "NIM" : "15109063", "name" : "Muhammad Iqbal", "address" : "Margahayu Raya Bandung" }
+```
+
+## 12 . Menampilkan semua data student secara urut berdasarkan name dengan sort() secara ascending maupun ascending.
+
+input:
+
+```
+db.students.find().sort({name:1}) // ascending
+db.students.find().sort({name:-1}) // descending
+```
+
+output ascending:
+
+```
+{ "_id" : ObjectId("58901e6769a01ac6a294a3ad"), "NIM" : "15109063", "name" : "Muhammad Iqbal", "address" : "Margahayu Raya Bandung", "department" : DBRef("departments",
+ ObjectId("58901b4e69a01ac6a294a3aa")) }
+{ "_id" : ObjectId("58901e6769a01ac6a294a3ae"), "NIM" : "16109063", "name" : "Raditya Arya", "address" : "Gatsu Surabaya", "department" : DBRef("departments", ObjectId(
+"58901b4e69a01ac6a294a3a8")) }
+{ "_id" : ObjectId("58901e6769a01ac6a294a3af"), "NIM" : "17109021", "name" : "Timothy Ombun", "address" : "Soekarno Hatta Batam", "department" : DBRef("departments", Ob
+jectId("58901b4e69a01ac6a294a3ab")) }
+```
+
+output descending:
+
+```
+{ "_id" : ObjectId("58901e6769a01ac6a294a3af"), "NIM" : "17109021", "name" : "Timothy Ombun", "address" : "Soekarno Hatta Batam", "department" : DBRef("departments", Ob
+jectId("58901b4e69a01ac6a294a3ab")) }
+{ "_id" : ObjectId("58901e6769a01ac6a294a3ae"), "NIM" : "16109063", "name" : "Raditya Arya", "address" : "Gatsu Surabaya", "department" : DBRef("departments", ObjectId(
+"58901b4e69a01ac6a294a3a8")) }
+{ "_id" : ObjectId("58901e6769a01ac6a294a3ad"), "NIM" : "15109063", "name" : "Muhammad Iqbal", "address" : "Margahayu Raya Bandung", "department" : DBRef("departments",
+ ObjectId("58901b4e69a01ac6a294a3aa")) }
+```
+
+## 13 . Menampilkan semua data department secara urut berdasarkan name secara ascending maupun descending.
+
+input:
+
+```
+db.departments.find().sort({name:1}) // ascending
+db.departments.find().sort({name:-1}) // descending
+```
+
+output ascending:
+
+```
+{ "_id" : ObjectId("58901b4e69a01ac6a294a3a9"), "code" : "FITB", "name" : "Fakultas Ilmu dan Teknologi Kebumian", "major" : [ { "name" : "Teknik Geologi" }, { "name" :
+"Teknik Geodesi dan Geomatika" }, { "name" : "Oseanografi" } ] }
+{ "_id" : ObjectId("58901b4e69a01ac6a294a3aa"), "code" : "FMIPA", "name" : "Fakultas Matematika dan Ilmu Pengetahuan Alam", "major" : [ { "name" : "Matematika" }, { "na
+me" : "Fisika" }, { "name" : "Astronomi" } ] }
+{ "_id" : ObjectId("58901b4e69a01ac6a294a3a8"), "code" : "FTTM", "name" : "Fakultas Teknik Pertambangan dan Perminyakan", "major" : [ { "name" : "Teknik Perminyakan" },
+ { "name" : "Teknik Pertambangan" }, { "name" : "Teknik Metalurgi" } ] }
+{ "_id" : ObjectId("58901b4e69a01ac6a294a3ab"), "code" : "SAPPK", "name" : "Sekolah Arsitektur dan Perencanaan Kota", "major" : [ { "name" : "Arsitektur" }, { "name" :
+"Teknik Planologi" } ] }
+{ "_id" : ObjectId("58901b4e69a01ac6a294a3ac"), "code" : "SF", "name" : "Sekolah Farmasi", "major" : [ { "name" : "Farmasi Klinik" }, { "name" : "Farmasi Kmunitas" } ]
+}
+```
+
+output descending:
+
+```
+{ "_id" : ObjectId("58901b4e69a01ac6a294a3ac"), "code" : "SF", "name" : "Sekolah Farmasi", "major" : [ { "name" : "Farmasi Klinik" }, { "name" : "Farmasi Kmunitas" } ]
+}
+{ "_id" : ObjectId("58901b4e69a01ac6a294a3ab"), "code" : "SAPPK", "name" : "Sekolah Arsitektur dan Perencanaan Kota", "major" : [ { "name" : "Arsitektur" }, { "name" :
+"Teknik Planologi" } ] }
+{ "_id" : ObjectId("58901b4e69a01ac6a294a3a8"), "code" : "FTTM", "name" : "Fakultas Teknik Pertambangan dan Perminyakan", "major" : [ { "name" : "Teknik Perminyakan" },
+ { "name" : "Teknik Pertambangan" }, { "name" : "Teknik Metalurgi" } ] }
+{ "_id" : ObjectId("58901b4e69a01ac6a294a3aa"), "code" : "FMIPA", "name" : "Fakultas Matematika dan Ilmu Pengetahuan Alam", "major" : [ { "name" : "Matematika" }, { "na
+me" : "Fisika" }, { "name" : "Astronomi" } ] }
+{ "_id" : ObjectId("58901b4e69a01ac6a294a3a9"), "code" : "FITB", "name" : "Fakultas Ilmu dan Teknologi Kebumian", "major" : [ { "name" : "Teknik Geologi" }, { "name" :
+"Teknik Geodesi dan Geomatika" }, { "name" : "Oseanografi" } ] }
+```
+
+
+## 14 . Mencari data student dengan name.
+
+input:
+
+```
+db.students.find({name:"Muhammad Iqbal"})
+```
+
+output:
+
+```
+{ "_id" : ObjectId("58901e6769a01ac6a294a3ad"), "NIM" : "15109063", "name" : "Muhammad Iqbal", "address" : "Margahayu Raya Bandung", "department" : DBRef("departments",
+ ObjectId("58901b4e69a01ac6a294a3aa")) }
 ```
